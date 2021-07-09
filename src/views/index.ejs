@@ -1,5 +1,12 @@
 <%- include('includes/head') %> 
 
     <h1>Lorem ipsum</h1>
+    <form action="/" method="POST">
+        <!-- Inserir sempre o input hidden com o valor do csrfToken em todos os formularios -->
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <label for="">Name</label>
+        <input type="text">
+        <button type="submit">Enviar</button>
+    </form>
 
 <%- include('includes/footer') %> 

@@ -8,6 +8,9 @@ const routes = require('./routes');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const helmet = require('helmet');
+const csrf = require('csurf');
+const { checkCsrfError, csrfMiddleware } = require('./middlewares/middleware');
 class App {
     constructor(){
         this.connection();
@@ -24,6 +27,7 @@ class App {
             .catch(e => console.log(e));
     }
     middlewares(){
+        this.app.use(helmet());
         /** Sessions */
         const sessionOptions = session({
             secret:'chaveSecreta', //alterar para variavel de ambiente
@@ -62,6 +66,10 @@ class App {
 
         this.app.set('views', path.resolve(__dirname, 'views'));
         this.app.set('view engine', 'ejs');
+
+        this.app.use(csrf());
+        this.app.use(checkCsrfError);
+        this.app.use(csrfMiddleware)
 
         this.app.use((req, res, next) => {
             res.header("Access-Control-Allow-Origin", "*");
