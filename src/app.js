@@ -20,7 +20,6 @@ class App {
             .then(() => {
                 console.log('database running');
                 this.app.emit('ready');
-        
             })
             .catch(e => console.log(e));
     }
