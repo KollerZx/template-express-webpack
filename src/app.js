@@ -27,7 +27,9 @@ class App {
             .catch(e => console.log(e));
     }
     middlewares(){
-        this.app.use(helmet());
+        /* ativar somente em produção*/
+        //this.app.use(helmet());
+          
         /** Sessions */
         const sessionOptions = session({
             secret:'chaveSecreta', //alterar para variavel de ambiente
@@ -67,6 +69,7 @@ class App {
         this.app.set('views', path.resolve(__dirname, 'views'));
         this.app.set('view engine', 'ejs');
 
+        /*CSRF TOKEN*/
         this.app.use(csrf());
         this.app.use(checkCsrfError);
         this.app.use(csrfMiddleware)
